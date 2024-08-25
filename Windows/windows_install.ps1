@@ -48,7 +48,7 @@ $packages = @(
     "thunderbird",
     "microsoft-hyper-v-all -source windowsfeatures",
     "Microsoft-Windows-Subsystem-Linux -source windowsfeatures",
-    "caesium.install"
+    "caesium.install",
     "localsend"
     
 )
