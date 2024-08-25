@@ -49,6 +49,7 @@ $packages = @(
     "microsoft-hyper-v-all -source windowsfeatures",
     "Microsoft-Windows-Subsystem-Linux -source windowsfeatures",
     "caesium.install"
+    "localsend"
     
 )
 foreach ($package in $packages) {
