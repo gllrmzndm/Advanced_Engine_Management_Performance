@@ -64,3 +64,8 @@ wsl --install
 
 # https://learn.microsoft.com/en-us/windows/wsl/install
 # https://learn.microsoft.com/en-gb/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.4#install-powershell-using-winget-recommended
+
+
+## GlazeWM dependecies
+
+# https://developer.microsoft.com/en-us/microsoft-edge/webview2/?form=MA13LH#download
