@@ -1,224 +1,284 @@
-# Yaml is white-space sensitive (use 2 spaces to indent).
+general:
+  # Whether to automatically focus windows underneath the cursor.
+  focus_follows_cursor: false
 
-###
-# Define a new window with an id of 'bar'. This window can then be opened
-# via the Zebar cli by running 'zebar open bar --args <ARGS...>'.
-#
-# Docs regarding window: https://some-future-docs-link.com
-window/bar:
-  providers: ["self"]
-  # Width of the window in physical pixels.
-  width: "{{ self.args.MONITOR_WIDTH }}"
-  # Height of the window in physical pixels.
-  height: "40"
-  # X-position of the window in physical pixels.
-  position_x: "{{ self.args.MONITOR_X }}"
-  # Y-position of the window in physical pixels.
-  position_y: "{{ self.args.MONITOR_Y }}"
-  # Whether to show the window above/below all others.
-  # Allowed values: 'always_on_top', 'always_on_bottom', 'normal'.
-  z_order: "normal"
-  # Whether the window should be shown in the taskbar.
-  shown_in_taskbar: false
-  # Whether the window should have resize handles.
-  resizable: false
-  # Styles to apply globally within the window. For example, we can use
-  # this to import the Nerdfonts icon font. Ref https://www.nerdfonts.com/cheat-sheet
-  # for a cheatsheet of available Nerdfonts icons.
-  global_styles: |
-    @import "https://www.nerdfonts.com/assets/css/webfont.css";
-  # CSS styles to apply to the root element within the window. Using CSS
-  # nesting, we can also target nested elements (e.g. below we set the
-  # color and margin-right of icons).
-  styles: |
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    align-items: center;
-    height: 100%;
-    color: rgb(255 255 255 / 90%);
-    font-family: ui-monospace, monospace;
-    font-size: 12px;
-    padding: 4px 24px;
-    border-bottom: 1px solid rgb(255 255 255 / 5%);;
-    background: linear-gradient(rgb(0 0 0 / 90%), rgb(5 2 20 / 85%));
+  # Whether to jump the cursor between windows focused by the WM.
+  cursor_follows_focus: false
 
-    i {
-      color: rgb(115 130 175 / 95%);
-      margin-right: 7px;
-    }
+  # Whether to switch back and forth between the previously focused workspace
+  # when focusing the current workspace.
+  toggle_workspace_on_refocus: true
 
-  group/left:
-    styles: |
-      display: flex;
-      align-items: center;
+  # Whether to show floating windows as always on top.
+  show_floating_on_top: false
 
-    template/logo:
-      styles: |
-        margin-right: 20px;
-      template: |
-        <i class="nf nf-fa-windows"></i>
+  # Amount to move floating windows by (eg. when using `alt+<hjkl>` on a floating window)
+  floating_window_move_amount: "5%"
 
-    template/glazewm_workspaces:
-      styles: |
-        display: flex;
-        align-items: center;
+  # Whether to center new floating windows.
+  center_new_floating_windows: true
 
-        .workspace {
-          background: rgb(255 255 255 / 5%);
-          margin-right: 4px;
-          padding: 4px 8px;
-          color: rgb(255 255 255 / 90%);
-          border: none;
-          border-radius: 2px;
-          cursor: pointer;
+  # *Strongly* recommended to set to 'false'. Whether to globally enable/disable
+  # window transition animations (on minimize, close, etc). Set to 'unchanged'
+  # to make no setting changes.
+  window_animations: "unchanged"
 
-          &.displayed {
-            background: rgb(255 255 255 / 15%);
-          }
+gaps:
+  # Gap between adjacent windows.
+  inner_gap: "20px"
 
-          &.focused,
-          &:hover {
-            background: rgb(75 115 255 / 50%);
-          }
-        }
-      providers: ["glazewm"]
-      events:
-        - type: "click"
-          fn_path: "script.js#focusWorkspace"
-          selector: ".workspace"
-      template: |
-        @for (workspace of glazewm.currentWorkspaces) {
-          <button
-            class="workspace {{ workspace.hasFocus ? 'focused' : '' }} {{ workspace.isDisplayed ? 'displayed' : '' }}"
-            id="{{ workspace.name }}"
-          >
-            {{ workspace.displayName ?? workspace.name }}
-          </button>
-        }
+  # Gap between windows and the screen edge.
+  outer_gap: "20px"
 
-  group/center:
-    styles: |
-      justify-self: center;
-      text-align: center;
+# Highlight active/inactive windows with a colored border.
+# ** Exclusive to Windows 11 due to API limitations.
+focus_borders:
+  active:
+    enabled: true
+    color: "#ff0000"
 
-    template/clock:
-      providers: ["date"]
-      # Available date tokens: https://moment.github.io/luxon/#/formatting?id=table-of-tokens
-      template: |
-        {{ date.toFormat(date.now, 'EEE	d MMM t') }}
+  inactive:
+    enabled: false
+    color: "#ff0000"
 
-    template/weather:
-      providers: ["weather"]
-      template: |
-        @switch (weather.status) {
-          @case ('clear_day') {<i class="nf nf-weather-day_sunny"></i>}
-          @case ('clear_night') {<i class="nf nf-weather-night_clear"></i>}
-          @case ('cloudy_day') {<i class="nf nf-weather-day_cloudy"></i>}
-          @case ('cloudy_night') {<i class="nf nf-weather-night_alt_cloudy"></i>}
-          @case ('light_rain_day') {<i class="nf nf-weather-day_sprinkle"></i>}
-          @case ('light_rain_night') {<i class="nf nf-weather-night_alt_sprinkle"></i>}
-          @case ('heavy_rain_day') {<i class="nf nf-weather-day_rain"></i>}
-          @case ('heavy_rain_night') {<i class="nf nf-weather-night_alt_rain"></i>}
-          @case ('snow_day') {<i class="nf nf-weather-day_snow"></i>}
-          @case ('snow_night') {<i class="nf nf-weather-night_alt_snow"></i>}
-          @case ('thunder_day') {<i class="nf nf-weather-day_lightning"></i>}
-          @case ('thunder_night') {<i class="nf nf-weather-night_alt_lightning"></i>}
-        }
-        {{ weather.celsiusTemp }}°
+bar:
+  height: "30px"
+  position: "top"
+  opacity: 1.0
+  background: "#20242cc4"
+  foreground: "#ffffff"
+  font_family: "Segoe UI"
+  font_size: "13px"
+  padding: "4px 6px"
+  offset_x: "0"
+  offset_y: "0"
+  border_radius: "0"
+  components_left:
+    - type: "workspaces"
+      focused_workspace_background: "#ffffff33"
+      displayed_workspace_background: "#00000033"
+      default_workspace_background: "transparent"
+  components_center:
+    # Windows title
+    - type: "window title"
+      margin: "0px 10px"
 
-  group/right:
-    styles: |
-      justify-self: end;
-      display: flex;
+    # Weather
+    - type: "weather"
+      margin: "0px 20px"
+      latitude: 53.219383
+      longitude: 6.566502
+      label: "{temperature_celsius}°C"
+      label_sun: "☀️ {temperature_celsius}°C"
+      label_moon: "🌙 {temperature_celsius}°C"
+      label_cloud_moon: "🌙☁️ {temperature_celsius}°C"
+      label_cloud_sun: "⛅ {temperature_celsius}°C"
+      label_cloud_moon_rain: "🌙🌧️ {temperature_celsius}°C"
+      label_cloud_sun_rain: "🌦️ {temperature_celsius}°C"
+      label_cloud_rain: "🌧️ {temperature_celsius}°C"
+      label_snow_flake: "❄️ {temperature_celsius}°C"
+      label_thunderstorm: "⚡ {temperature_celsius}°C"
+      label_cloud: "☁️ {temperature_celsius}°C"
 
-      .template {
-        margin-left: 20px;
-      }
+    # Clock
+    - type: "clock"
+      # Documentation on formatting date/time string:
+      # https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings
+      time_formatting: "hh:mm tt  ddd MMM d"
 
-    # template/glazewm_other:
-    #   providers: ["glazewm"]
-    #   styles: |
-    #     .binding-mode,
-    #     .tiling-direction {
-    #       background: rgb(255 255 255 / 15%);
-    #       color: rgb(255 255 255 / 90%);
-    #       border-radius: 2px;
-    #       padding: 4px 6px;
-    #       margin: 0;
-    #     }
+  components_right:
+    # - type: "system tray"
+    - type: "tiling direction"
+      label_horizontal: "⮂"
+      label_vertical: "⮁"
+      background: "#ffffff33"
+      margin: "0 4px"
+      padding: "0 8px"
+    - type: "binding mode"
+      background: "#ffffff33"
+      margin: "0 4px 0 0"
+      padding: "0 8px"
+    # - type: "clock"
+    # Documentation on formatting date/time string:
+    # https://learn.microsoft.com/en-us/dotnet/standard/base-types/custom-date-and-time-format-strings
+    # time_formatting: "hh:mm tt  ddd MMM d"
 
-    # template: |
-    #   @for (bindingMode of glazewm.bindingModes) {
-    #     <span class="binding-mode">
-    #       {{ bindingMode.displayName ?? bindingMode.name }}
-    #     </span>
-    #   }
+workspaces:
+  - name: "1"
+  - name: "2"
+  - name: "3"
+  - name: "4"
+  - name: "5"
+  - name: "6"
+  - name: "7"
+  - name: "8"
+  - name: "9"
 
-    #   @if (glazewm.tilingDirection === 'horizontal') {
-    #     <i class="tiling-direction nf nf-md-swap_horizontal"></i>
-    #   } @else {
-    #     <i class="tiling-direction nf nf-md-swap_vertical"></i>
-    #   }
+window_rules:
+  # Task Manager requires admin privileges to manage and should be ignored unless running
+  # the WM as admin.
+  - command: "ignore"
+    match_process_name: "/Taskmgr|ScreenClippingHost/"
 
-    # template/network:
-    #   providers: ['network']
-    #   template: |
-    #     <!-- Show icon based on signal strength. -->
-    #     @if (network.defaultInterface?.type === 'ethernet') {
-    #       <i class="nf nf-md-ethernet_cable"></i>
-    #     } @else if (network.defaultInterface?.type === 'wifi') {
-    #       @if (network.defaultGateway?.signalStrength >= 80) {<i class="nf nf-md-wifi_strength_4"></i>}
-    #       @else if (network.defaultGateway?.signalStrength >= 65) {<i class="nf nf-md-wifi_strength_3"></i>}
-    #       @else if (network.defaultGateway?.signalStrength >= 40) {<i class="nf nf-md-wifi_strength_2"></i>}
-    #       @else if (network.defaultGateway?.signalStrength >= 25) {<i class="nf nf-md-wifi_strength_1"></i>}
-    #       @else {<i class="nf nf-md-wifi_strength_outline"></i>}
-    #       {{ network.defaultGateway?.ssid }}
-    #     } @else {
-    #       <i class="nf nf-md-wifi_strength_off_outline"></i>
-    #     }
+  # Launches system dialogs as floating by default (eg. File Explorer save/open dialog).
+  - command: "set floating"
+    match_class_name: "#32770"
 
-    # template/memory:
-    #   providers: ['memory']
-    #   template: |
-    #     <i class="nf nf-fae-chip"></i>
-    #     {{ Math.round(memory.usage) }}%
+  # Do not manage picture-in-picture windows for browsers. Note that the default is for
+  # English; change `match_title` to the window's title if you use another language.
+  - command: "ignore"
+    match_title: "[Pp]icture.in.[Pp]icture"
+    match_class_name: "Chrome_WidgetWin_1|MozillaDialogClass"
 
-    # template/cpu:
-    #   providers: ['cpu']
-    #   styles: |
-    #     .high-usage {
-    #       color: #900029;
-    #     }
-    #   template: |
-    #     <i class="nf nf-oct-cpu"></i>
+  # Some applications (eg. Steam) have borders that extend past the normal border size.
+  - command: "resize borders 0px -7px -7px -7px"
+    match_process_name: "steam"
 
-    #     <!-- Change the text color if the CPU usage is high. -->
-    #     @if (cpu.usage > 85) {
-    #       <span class="high-usage">{{ Math.round(cpu.usage) }}%</span>
-    #     } @else {
-    #       <span>{{ Math.round(cpu.usage) }}%</span>
-    #     }
+binding_modes:
+  - name: "resize"
+    keybindings:
+      # Resize focused window by a percentage or pixel amount.
+      - command: "resize width -2%"
+        bindings: ["H", "Left"]
+      - command: "resize width +2%"
+        bindings: ["L", "Right"]
+      - command: "resize height +2%"
+        bindings: ["K", "Up"]
+      - command: "resize height -2%"
+        bindings: ["J", "Down"]
+      # Press enter/escape to return to default keybindings.
+      - command: "binding mode none"
+        bindings: ["Escape", "Enter"]
 
-    # template/battery:
-    #   providers: ['battery']
-    #   styles: |
-    #     position: relative;
+keybindings:
+  # Shift focus in a given direction.
+  - command: "focus left"
+    bindings: ["Alt+H", "Alt+Left"]
+  - command: "focus right"
+    bindings: ["Alt+L", "Alt+Right"]
+  - command: "focus up"
+    bindings: ["Alt+K", "Alt+Up"]
+  - command: "focus down"
+    bindings: ["Alt+J", "Alt+Down"]
 
-    #     .charging-icon {
-    #       position: absolute;
-    #       font-size: 11px;
-    #       left: 7px;
-    #       top: 2px;
-    #     }
-    #   template: |
-    #     <!-- Show icon for whether battery is charging. -->
-    #     @if (battery.isCharging) {<i class="nf nf-md-power_plug charging-icon"></i>}
+  # Move focused window in a given direction.
+  - command: "move left"
+    bindings: ["Alt+Shift+H", "Alt+Shift+Left"]
+  - command: "move right"
+    bindings: ["Alt+Shift+L", "Alt+Shift+Right"]
+  - command: "move up"
+    bindings: ["Alt+Shift+K", "Alt+Shift+Up"]
+  - command: "move down"
+    bindings: ["Alt+Shift+J", "Alt+Shift+Down"]
 
-    #     <!-- Show icon for how much of the battery is charged. -->
-    #     @if (battery.chargePercent > 90) {<i class="nf nf-fa-battery_4"></i>}
-    #     @else if (battery.chargePercent > 70) {<i class="nf nf-fa-battery_3"></i>}
-    #     @else if (battery.chargePercent > 40) {<i class="nf nf-fa-battery_2"></i>}
-    #     @else if (battery.chargePercent > 20) {<i class="nf nf-fa-battery_1"></i>}
-    #     @else {<i class="nf nf-fa-battery_0"></i>}
+  # Resize focused window by a percentage or pixel amount.
+  - command: "resize width -2%"
+    binding: "Alt+U"
+  - command: "resize width +2%"
+    binding: "Alt+P"
+  - command: "resize height +2%"
+    binding: "Alt+O"
+  - command: "resize height -2%"
+    binding: "Alt+I"
 
-    #     {{ Math.round(battery.chargePercent) }}%
+  # As an alternative to the resize keybindings above, resize mode enables resizing via
+  # HJKL or arrow keys. The binding mode is defined above with the name "resize".
+  - command: "binding mode resize"
+    binding: "Alt+R"
+
+  # Change tiling direction. This determines where new tiling windows will be inserted.
+  - command: "tiling direction toggle"
+    binding: "Alt+V"
+
+  # Change focus between floating / tiling windows.
+  - command: "focus mode toggle"
+    binding: "Alt+Space"
+
+  # Change the focused window to be floating / tiling.
+  - command: "toggle floating"
+    binding: "Alt+Shift+Space"
+
+  # Change the focused window to be maximized / unmaximized.
+  - command: "toggle maximized"
+    binding: "Alt+X"
+
+  # Minimize focused window.
+  - command: "set minimized"
+    binding: "Alt+M"
+
+  # Close focused window.
+  - command: "close"
+    binding: "Alt+Shift+Q"
+
+  # Kill GlazeWM process safely.
+  - command: "exit wm"
+    binding: "Alt+Shift+E"
+
+  # Re-evaluate configuration file.
+  - command: "reload config"
+    binding: "Alt+Shift+R"
+
+  # Launch CMD terminal (alternatively `exec wt` or `exec %ProgramFiles%/Git/git-bash.exe`
+  # to start Windows Terminal and Git Bash respectively.
+  - command: "exec cmd"
+    binding: "Alt+Enter"
+
+  # Focus the workspace that last had focus.
+  - command: "focus workspace recent"
+    binding: "Alt+Y"
+
+  # Focus the next/previous workspace defined in `workspaces` config.
+  - command: "focus workspace next"
+    binding: "Alt+T"
+  - command: "focus workspace prev"
+    binding: "Alt+Shift+T"
+
+  # Change focus to a workspace defined in `workspaces` config.
+  - command: "focus workspace 1"
+    binding: "Alt+1"
+  - command: "focus workspace 2"
+    binding: "Alt+2"
+  - command: "focus workspace 3"
+    binding: "Alt+3"
+  - command: "focus workspace 4"
+    binding: "Alt+4"
+  - command: "focus workspace 5"
+    binding: "Alt+5"
+  - command: "focus workspace 6"
+    binding: "Alt+6"
+  - command: "focus workspace 7"
+    binding: "Alt+7"
+  - command: "focus workspace 8"
+    binding: "Alt+8"
+  - command: "focus workspace 9"
+    binding: "Alt+9"
+
+  # Move focused workspace to a monitor in a given direction.
+  - command: "move workspace left"
+    binding: "Alt+A"
+  - command: "move workspace right"
+    binding: "Alt+F"
+  - command: "move workspace up"
+    binding: "Alt+D"
+  - command: "move workspace down"
+    binding: "Alt+S"
+
+  # Move focused window to a workspace defined in `workspaces` config.
+  - commands: ["move to workspace 1", "focus workspace 1"]
+    binding: "Alt+Shift+1"
+  - commands: ["move to workspace 2", "focus workspace 2"]
+    binding: "Alt+Shift+2"
+  - commands: ["move to workspace 3", "focus workspace 3"]
+    binding: "Alt+Shift+3"
+  - commands: ["move to workspace 4", "focus workspace 4"]
+    binding: "Alt+Shift+4"
+  - commands: ["move to workspace 5", "focus workspace 5"]
+    binding: "Alt+Shift+5"
+  - commands: ["move to workspace 6", "focus workspace 6"]
+    binding: "Alt+Shift+6"
+  - commands: ["move to workspace 7", "focus workspace 7"]
+    binding: "Alt+Shift+7"
+  - commands: ["move to workspace 8", "focus workspace 8"]
+    binding: "Alt+Shift+8"
+  - commands: ["move to workspace 9", "focus workspace 9"]
+    bindings: ["Alt+Shift+9"]
