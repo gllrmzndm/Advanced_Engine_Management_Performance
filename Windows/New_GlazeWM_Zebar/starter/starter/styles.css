@@ -6,11 +6,11 @@
 
 i {
   color: rgb(115 130 175 / 95%);
-  margin-right: 7px;
+  margin-right: 10px;
 }
 
 body {
-  color: rgb(255 255 255 / 90%);
+  color: rgba(0, 0, 0, 0.9);
   font-family: ui-monospace, monospace;
   font-size: 12px;
   overflow: hidden;
@@ -23,8 +23,8 @@ body,
 }
 
 #root {
-  border-bottom: 1px solid rgb(255 255 255 / 5%);
-  background: linear-gradient(rgb(0 0 0 / 90%), rgb(5 2 20 / 85%));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.856);
+  background: linear-gradient(rgb(220, 231, 248), rgb(220, 231, 248));
 }
 
 .app {
@@ -70,7 +70,7 @@ body,
 }
 
 .workspace {
-  background: rgb(255 255 255 / 5%);
+  background: rgba(71, 2, 2, 0.05);
   margin-right: 4px;
   padding: 4px 8px;
   color: rgb(255 255 255 / 90%);
@@ -84,7 +84,7 @@ body,
 
   &.focused,
   &:hover {
-    background: rgb(75 115 255 / 50%);
+    background: rgb(255, 18, 119)
   }
 }
 
