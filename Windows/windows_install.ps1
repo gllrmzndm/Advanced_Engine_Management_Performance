@@ -56,6 +56,7 @@ foreach ($package in $packages) {
     choco install $package -y
 }
 
+winget install "aquile reader"
 winget install youtorrent
 winget install scoop
 winget install "openssh beta"
