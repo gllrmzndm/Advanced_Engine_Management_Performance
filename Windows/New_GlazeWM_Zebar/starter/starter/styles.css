@@ -5,14 +5,14 @@
 @import 'https://www.nerdfonts.com/assets/css/webfont.css';
 
 i {
-  color: rgb(115 130 175 / 95%);
+  color: rgba(223, 223, 223, 0.9);
   margin-right: 10px;
 }
 
 body {
-  color: rgba(0, 0, 0, 0.9);
+  color: rgba(223, 223, 223, 0.9);
   font-family: ui-monospace, monospace;
-  font-size: 12px;
+  font-size: 13px;
   overflow: hidden;
 }
 
@@ -23,8 +23,8 @@ body,
 }
 
 #root {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.856);
-  background: linear-gradient(rgb(220, 231, 248), rgb(220, 231, 248));
+  /* border-bottom: 1px solid rgb(97, 120, 132); */
+  background: rgb(44, 44, 44);
 }
 
 .app {
@@ -84,7 +84,7 @@ body,
 
   &.focused,
   &:hover {
-    background: rgb(255, 18, 119)
+    background: rgb(97, 120, 132)
   }
 }
 
