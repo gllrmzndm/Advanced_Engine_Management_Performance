@@ -36,8 +36,9 @@ window_effects:
     # Highlight the window with a colored border.
     # ** Exclusive to Windows 11 due to API limitations.
     border:
+      border: 3px
       enabled: true
-      color: "#8dbcff"
+      color: "#0078d4"
 
   # Visual effects to apply to non-focused windows.
   other_windows:
