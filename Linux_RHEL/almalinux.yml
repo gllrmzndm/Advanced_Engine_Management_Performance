@@ -17,12 +17,15 @@
     yum:
       name:
       - ansible
+      - aria2
+      - curl
       - git
       - tuned
-      - cockpit
-      - cockpit-pcp
       - neovim
       - screen
+      - dnf automatic
+      - cockpit
+      - cockpit-pcp
       - virt-manager
       - qemu-kvm
       - libvirt
