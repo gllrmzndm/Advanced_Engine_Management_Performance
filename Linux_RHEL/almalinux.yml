@@ -20,6 +20,7 @@
       - git
       - tuned
       - cockpit
+      - cockpit-pcp
       - neovim
       - screen
       - virt-manager
