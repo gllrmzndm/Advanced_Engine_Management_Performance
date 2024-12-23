@@ -1,0 +1,56 @@
+---
+- name: Configure superamerica RHEL LINUX SERVER
+  hosts: localhost
+  become: yes
+  tasks:
+  - name: Ensure the system is updated
+    yum:
+      name: "*"
+      state: latest
+
+  - name: Install EPEL repository
+    yum:
+      name: epel-release
+      state: present
+
+  - name: Install required packages
+    yum:
+      name:
+      - ansible
+      - git
+      - tuned
+      - cockpit
+      - neovim
+      - screen
+      - virt-manager
+      - qemu-kvm
+      - libvirt
+      - libvirt-python
+      - libvirt-client
+      - virt-install
+      - bridge-utils
+      state: present
+
+  - name: Enable and start Cockpit service
+    systemd:
+      name: cockpit
+      state: started
+      enabled: yes
+
+  - name: Enable and start libvirtd service
+    systemd:
+      name: libvirtd
+      state: started
+      enabled: yes
+
+  - name: Disable lid switch handling (logind.conf configuration)
+    lineinfile:
+      path: /etc/systemd/logind.conf
+      regexp: "^#?HandleLidSwitch.*"
+      line: "HandleLidSwitch=ignore"
+      state: present
+
+  - name: Reload systemd to apply logind.conf changes
+    command: systemctl restart systemd-logind
+    args:
+      warn: false
