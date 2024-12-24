@@ -1,6 +1,6 @@
 ---
-- name: Configure superamerica RHEL LINUX SERVER
-  hosts: localhost
+- name: Configure RHEL LINUX SERVER
+  hosts: localhost # ansible-playbook setup.yml --ask-become-pass
   become: yes
   tasks:
   - name: Ensure the system is updated
@@ -23,14 +23,24 @@
       - tuned
       - neovim
       - screen
-      - dnf automatic
+      - dnf-automatic
+      - kpatch
       - cockpit
       - cockpit-pcp
+      - cockpit-storaged
+      - cockpit-networkmanager
+      - cockpit-packagekit
+      - cockpit-ostree
+      - cockpit-machines
+      - cockpit-podman
+      - cockpit-selinux
+      - cockpit-kdump
+      - cockpit-sosreport
+      - cockpit-files
+      - cockpit-composer
       - virt-manager
       - qemu-kvm
       - libvirt
-      - libvirt-python
-      - libvirt-client
       - virt-install
       - bridge-utils
       state: present
@@ -53,8 +63,3 @@
       regexp: "^#?HandleLidSwitch.*"
       line: "HandleLidSwitch=ignore"
       state: present
-
-  - name: Reload systemd to apply logind.conf changes
-    command: systemctl restart systemd-logind
-    args:
-      warn: false
