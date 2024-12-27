@@ -51,7 +51,8 @@ $packages = @(
     "caesium.install",
     "localsend",
     "neovim",
-    "vifm"
+    "vifm",
+    "msys2"
     
 )
 foreach ($package in $packages) {
