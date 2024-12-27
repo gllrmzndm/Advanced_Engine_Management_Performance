@@ -22,7 +22,7 @@
       - git
       - tuned
       - neovim
-      - screen
+      - tmux
       - dnf-automatic
       - kpatch
       - cockpit
@@ -63,3 +63,9 @@
       regexp: "^#?HandleLidSwitch.*"
       line: "HandleLidSwitch=ignore"
       state: present
+
+
+
+### TMUX Plugin manager
+### https://github.com/tmux-plugins/tpm?tab=readme-ov-file
+###
