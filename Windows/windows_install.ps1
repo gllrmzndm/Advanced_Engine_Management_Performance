@@ -43,7 +43,7 @@ $packages = @(
     "rufus",
     "rsync",
     "ventoy",
-    "tabby",
+    # "tabby",
     "sysinternals",
     "thunderbird",
     "microsoft-hyper-v-all -source windowsfeatures",
