@@ -3,6 +3,8 @@
 sudo apt-get update -y
 sudo apt-get upgrade -y
 
+sudo apt-get install -y ripgrep
+sudo apt-get install -y ranger
 sudo apt-get install -y gnupg2
 sudo apt-get install -y pass
 sudo apt-get install -y shellcheck
@@ -60,6 +62,10 @@ sudo adduser $USER libvirt
 sudo adduser $USER libvirt-qemu
 
 # Automatic updates https://www.cyberciti.biz/faq/how-to-set-up-automatic-updates-for-ubuntu-linux-18-04/
+
+# optional neovim for kickstart
+# sudo add-apt-repository ppa:neovim-ppa/unstable
+# sudo apt update
 
 #sudo apt-get install unattended-upgrades apt-listchanges
 #sudo dpkg-reconfigure -plow unattended-upgrades
