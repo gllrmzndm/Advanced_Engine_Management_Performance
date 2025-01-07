@@ -115,7 +115,6 @@ sudo adduser $USER libvirt-qemu
 #vagrant plugin install vagrant-hostsup
 #sudo apt-get install -y gnome-shell-extension-weather gnome-shell-extension-gsconnect-browsers
 
-
 # https://www.pling.com/p/1175480/
 # https://www.gnome-look.org/p/1148692/
 # https://extensions.gnome.org/extension/1319/gsconnect/
