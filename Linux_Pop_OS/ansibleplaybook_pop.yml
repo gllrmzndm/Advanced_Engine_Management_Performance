@@ -4,7 +4,6 @@
 ### Command 2: 'ansible-playbook  ansibleplaybook.yml --ask-become-pass'
 
 ### command 2 is default for this playbook and you can use it directly to install and configure the software.
-
 ---
 - name: Install and configure packages
   hosts: localhost ## change to all for testing to other server otherwise use "localhost
@@ -123,6 +122,5 @@
       - gnome-shell-extension-weather
       - gnome-shell-extension-gsconnect-browsers
       state: present
-
 
 ### https://www.chezmoi.io/

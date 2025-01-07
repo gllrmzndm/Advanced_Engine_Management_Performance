@@ -1,109 +1,113 @@
 #!/bin/bash
 
-sudo apt-get update -y
-sudo apt-get upgrade -y
+# Made by Guillermo Zaandam
 
-sudo apt-get install -y ripgrep
-sudo apt-get install -y ranger
-sudo apt-get install -y gnupg2
-sudo apt-get install -y pass
-sudo apt-get install -y shellcheck
-sudo apt-get install -y elinks
-sudo apt-get install -y autossh
-sudo apt-get install -y surfraw surfraw-extra
-sudo apt-get install -y googler
-sudo apt-get install -y jpegoptim
-sudo apt-get install -y ffmpeg
-sudo apt-get install -y gnome-tweaks
-sudo apt-get install -y gnome-shell-extensions
-sudo apt-get install -y thunderbird
-sudo apt-get install -y software-properties-common
-sudo apt-get install -y gnome-tweaks
-sudo apt-get install -y gimp
-sudo apt-get install -y scribus
-sudo apt-get install -y krita
-sudo apt-get install -y darktable
-sudo apt-get install -y graphviz
+# Define the default playbook command (can be overridden by the user)
+PLAYBOOK_COMMAND="ansible-playbook ansibleplaybook.yml --ask-become-pass"
 
-sudo apt-get install -y google-chrome-stable
-sudo apt-get install -y chrome-gnome-shell
-sudo apt-get install -y peek
-sudo apt-get install -y gnome-shell-extension-weather gnome-shell-extension-gsconnect-browsers
-sudo apt-get install -y lollypop
-sudo apt-get install -y shotwell
+# Define the hosts
+HOSTS="localhost" # Change to 'all' for testing on other servers or modify as needed
 
-sudo apt-get install -y remmina
-sudo apt-get install -y transmission
-sudo apt-get install -y deja-dup
-sudo apt-get install -y ansible
-sudo apt-get install -y dislocker
-sudo apt-get install -y neovim
-sudo apt-get install -y gnome-books
-sudo apt-get install -y guake
-sudo apt-get install -y gpick
-sudo apt-get install -y mosh
-sudo apt-get install -y autokey-gtk
-sudo apt-get install -y aria2
-sudo apt-get install -y simplescreenrecorder
-sudo apt-get install -y openshot
-sudo apt-get install -y install gnome-documents
-sudo apt-get install -y neovim
+# Update apt cache
+echo "Updating apt cache..."
+sudo apt update -y
 
-yes 3 | sudo update-alternatives --config editor
+# Upgrade apt packages
+echo "Upgrading apt packages..."
+sudo apt upgrade -y
 
-flatpak install flathub de.haeckerfelix.Fragments -y
+# Install required packages
+echo "Installing required packages..."
+sudo apt install -y \
+    ripgrep \
+    ranger \
+    gnupg2 \
+    pass \
+    shellcheck \
+    elinks \
+    autossh \
+    surfraw \
+    surfraw-extra \
+    googler \
+    jpegoptim \
+    ffmpeg \
+    gnome-tweaks \
+    gnome-shell-extensions \
+    thunderbird \
+    software-properties-common \
+    gimp \
+    scribus \
+    krita \
+    darktable \
+    graphviz \
+    google-chrome-stable \
+    peek \
+    lollypop \
+    shotwell \
+    remmina \
+    transmission \
+    deja-dup \
+    ansible \
+    dislocker \
+    neovim \
+    gnome-books \
+    guake \
+    gpick \
+    mosh \
+    autokey-gtk \
+    aria2 \
+    simplescreenrecorder \
+    flameshot \
+    virt-manager \
+    libguestfs-tools \
+    gnome-boxes \
+    qemu \
+    qemu-kvm \
+    bridge-utils \
+    7zip \
+    jq \
+    poppler-utils \
+    fd-find \
+    fzf \
+    zoxide \
+    imagemagick
 
-sudo apt-get install -y flameshot
-flameshot config -f %T_ %e-%m-%Y
+# Install Flatpak package
+echo "Installing Flatpak package..."
+flatpak install -y flathub de.haeckerfelix.Fragments
 
-sudo apt-get install -y virt-manager libguestfs-tools gnome-boxes
-sudo apt-get install -y qemu qemu-kvm bridge-utils
-sudo adduser $USER libvirt
-sudo adduser $USER libvirt-qemu
+# Download Ghostty .deb package
+echo "Downloading Ghostty .deb package..."
+curl -L -o /tmp/ghostty_0.2.0_amd64.deb "https://github.com/mkasberg/ghostty-ubuntu/releases/download/1.0.1-0-ppa1/ghostty_1.0.1-0.ppa1_amd64_22.04.deb"
 
-# Automatic updates https://www.cyberciti.biz/faq/how-to-set-up-automatic-updates-for-ubuntu-linux-18-04/
+# Install Ghostty
+echo "Installing Ghostty..."
+sudo apt install -y /tmp/ghostty_0.2.0_amd64.deb
 
-# optional neovim for kickstart
-# sudo add-apt-repository ppa:neovim-ppa/unstable
-# sudo apt update
+# Download chezmoi .deb package
+echo "Downloading chezmoi .deb package..."
+curl -L -o /tmp/chezmoi_2.57.0_linux_amd64.deb "https://github.com/twpayne/chezmoi/releases/download/v2.57.0/chezmoi_2.57.0_linux_amd64.deb"
 
-#sudo apt-get install unattended-upgrades apt-listchanges
-#sudo dpkg-reconfigure -plow unattended-upgrades
+# Install chezmoi
+echo "Installing chezmoi..."
+sudo apt install -y /tmp/chezmoi_2.57.0_linux_amd64.deb
 
-#sudo apt-get install -y virtualbox virtualbox-ext-pack
+# Configure Flameshot
+echo "Configuring Flameshot..."
+flameshot config -f "%T_ %e-%m-%Y"
 
-# sudo apt-get install -y build-dep vagrant ruby-libvirt
-# sudo apt-get install -y qemu libvirt-daemon-system libvirt-clients ebtables dnsmasq-base
-# sudo apt-get install -y libxslt-dev libxml2-dev libvirt-dev zlib1g-dev ruby-dev
+# Add user to libvirt and libvirt-qemu groups
+echo "Adding user to libvirt and libvirt-qemu groups..."
+sudo usermod -aG libvirt,libvirt-qemu "$(whoami)"
 
-#sudo apt-get install -y vagrant
-#vagrant plugin install vagrant-libvirt
-#vagrant plugin install winrm
-#vagrant plugin install winrm-elevated
-#vagrant plugin install vagrant-hostsup
+# Configure editor alternative (set editor to vim or preferred editor)
+echo "Setting default editor to neovim..."
+sudo update-alternatives --set editor /usr/bin/nvim
 
-# https://www.pling.com/p/1175480/
-# https://www.gnome-look.org/p/1148692/
-# Gnome superkey + number in deconf editor "keybindings" org.gnome.shell.keybindings
+# Install optional gnome-shell extensions
+echo "Installing GNOME Shell extensions (Optional)..."
+sudo apt install -y \
+    gnome-shell-extension-weather \
+    gnome-shell-extension-gsconnect-browsers
 
-# Vagrant
-# sudo apt-get install -y build-dep vagrant ruby-libvirt
-# sudo apt-get install -y qemu libvirt-daemon-system libvirt-clients ebtables dnsmasq-base
-# sudo apt-get install -y libxslt-dev libxml2-dev libvirt-dev zlib1g-dev ruby-dev
-
-#sudo apt-get install -y vagrant
-#vagrant plugin install vagrant-libvirt
-#vagrant plugin install winrm
-#vagrant plugin install winrm-elevated
-#vagrant plugin install vagrant-hostsup
-#sudo apt-get install -y gnome-shell-extension-weather gnome-shell-extension-gsconnect-browsers
-
-# https://www.pling.com/p/1175480/
-# https://www.gnome-look.org/p/1148692/
-# https://extensions.gnome.org/extension/1319/gsconnect/
-# https://extensions.gnome.org/extension/750/openweather/
-# https://extensions.gnome.org/extension/442/drop-down-terminal/
-
-# https://askubuntu.com/questions/968103/disable-the-default-app-key-supernum-functionality-on-ubuntu-17-10-and-later
-# https://askubuntu.com/questions/617589/ubuntu-15-04-jumps-into-standby-after-login
-# https://itsfoss.com/curtail-image-compress/ Image compressions
+echo "Setup completed successfully!"
