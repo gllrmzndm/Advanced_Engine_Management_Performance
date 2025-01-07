@@ -18,59 +18,7 @@ sudo apt upgrade -y
 
 # Install required packages
 echo "Installing required packages..."
-sudo apt install -y \
-    ripgrep \
-    ranger \
-    gnupg2 \
-    pass \
-    shellcheck \
-    elinks \
-    autossh \
-    surfraw \
-    surfraw-extra \
-    googler \
-    jpegoptim \
-    ffmpeg \
-    gnome-tweaks \
-    gnome-shell-extensions \
-    thunderbird \
-    software-properties-common \
-    gimp \
-    scribus \
-    krita \
-    darktable \
-    graphviz \
-    google-chrome-stable \
-    peek \
-    lollypop \
-    shotwell \
-    remmina \
-    transmission \
-    deja-dup \
-    ansible \
-    dislocker \
-    neovim \
-    gnome-books \
-    guake \
-    gpick \
-    mosh \
-    autokey-gtk \
-    aria2 \
-    simplescreenrecorder \
-    flameshot \
-    virt-manager \
-    libguestfs-tools \
-    gnome-boxes \
-    qemu \
-    qemu-kvm \
-    bridge-utils \
-    7zip \
-    jq \
-    poppler-utils \
-    fd-find \
-    fzf \
-    zoxide \
-    imagemagick
+sudo apt install -y ripgrep ranger gnupg2 pass shellcheck elinks autossh surfraw surfraw-extra googler jpegoptim ffmpeg gnome-tweaks gnome-shell-extensions thunderbird software-properties-common gimp scribus krita darktable graphviz google-chrome-stable peek lollypop shotwell remmina transmission deja-dup ansible dislocker neovim gnome-books guake gpick mosh autokey-gtk aria2 simplescreenrecorder flameshot virt-manager libguestfs-tools gnome-boxes qemu qemu-kvm bridge-utils 7zip jq poppler-utils fd-find fzf zoxide imagemagick
 
 # Install Flatpak package
 echo "Installing Flatpak package..."
@@ -106,8 +54,6 @@ sudo update-alternatives --set editor /usr/bin/nvim
 
 # Install optional gnome-shell extensions
 echo "Installing GNOME Shell extensions (Optional)..."
-sudo apt install -y \
-    gnome-shell-extension-weather \
-    gnome-shell-extension-gsconnect-browsers
+sudo apt install -y gnome-shell-extension-weather gnome-shell-extension-gsconnect-browsers
 
 echo "Setup completed successfully!"
