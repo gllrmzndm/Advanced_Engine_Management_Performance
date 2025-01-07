@@ -1,0 +1,128 @@
+### Made by Guillermo Zaandam
+
+### Command 1: 'ansible-playbook -i 192.168.122.194, ansibleplaybook.yml --ask-become-pass'
+### Command 2: 'ansible-playbook  ansibleplaybook.yml --ask-become-pass'
+
+### command 2 is default for this playbook and you can use it directly to install and configure the software.
+
+---
+- name: Install and configure packages
+  hosts: localhost ## change to all for testing to other server otherwise use "localhost
+  become: yes
+  tasks:
+  - name: Update apt cache
+    apt:
+      update_cache: yes
+      cache_valid_time: 3600
+
+  - name: Upgrade apt packages
+    apt:
+      upgrade: yes
+      update_cache: yes
+
+  - name: Install required packages
+    apt:
+      name:
+      - ripgrep
+      - ranger
+      - gnupg2
+      - pass
+      - shellcheck
+      - elinks
+      - autossh
+      - surfraw
+      - surfraw-extra
+      - googler
+      - jpegoptim
+      - ffmpeg
+      - gnome-tweaks
+      - gnome-shell-extensions
+      - thunderbird
+      - software-properties-common
+      - gimp
+      - scribus
+      - krita
+      - darktable
+      - graphviz
+      - google-chrome-stable
+      - peek
+      - lollypop
+      - shotwell
+      - remmina
+      - transmission
+      - deja-dup
+      - ansible
+      - dislocker
+      - neovim
+      - gnome-books
+      - guake
+      - gpick
+      - mosh
+      - autokey-gtk
+      - aria2
+      - simplescreenrecorder
+      - flameshot
+      - virt-manager
+      - libguestfs-tools
+      - gnome-boxes
+      - qemu
+      - qemu-kvm
+      - bridge-utils
+      - 7zip
+      - jq
+      - poppler-utils
+      - fd-find
+      - fzf
+      - zoxide
+      - imagemagick
+      state: present
+      update_cache: yes
+
+  - name: Install Flatpak package
+    flatpak:
+      name: de.haeckerfelix.Fragments
+      remote: flathub
+      state: present
+
+  - name: Download Ghostty .deb package
+    get_url:
+      url: "https://github.com/mkasberg/ghostty-ubuntu/releases/download/1.0.1-0-ppa1/ghostty_1.0.1-0.ppa1_amd64_22.04.deb"
+      dest: /tmp/ghostty_0.2.0_amd64.deb
+
+  - name: Install Ghostty
+    apt:
+      deb: /tmp/ghostty_0.2.0_amd64.deb
+
+  - name: Download chezmoi .deb package
+    get_url:
+      url: "https://github.com/twpayne/chezmoi/releases/download/v2.57.0/chezmoi_2.57.0_linux_amd64.deb"
+      dest: /tmp/chezmoi_2.57.0_linux_amd64.deb
+
+  - name: Install chezmoi
+    apt:
+      deb: /tmp/chezmoi_2.57.0_linux_amd64.deb
+
+  - name: Configure Flameshot
+    command: flameshot config -f "%T_ %e-%m-%Y"
+
+  - name: Add user to libvirt and libvirt-qemu groups
+    user:
+      name: "{{ ansible_user }}"
+      group: "{{ item }}"
+      append: yes
+    with_items:
+    - libvirt
+    - libvirt-qemu
+
+  - name: Configure editor alternative (set editor to vim or another preferred editor)
+    command: update-alternatives --set editor /usr/bin/nvim
+
+  - name: Install gnome-shell extensions (Optional)
+    apt:
+      name:
+      - gnome-shell-extension-weather
+      - gnome-shell-extension-gsconnect-browsers
+      state: present
+
+
+### https://www.chezmoi.io/
