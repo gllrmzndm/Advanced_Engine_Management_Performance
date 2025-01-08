@@ -20,7 +20,7 @@
       update_cache: yes
 
   - name: Install required packages
-    apt:
+    ansible.builtin.apt:
       name:
       - ripgrep
       - ranger
@@ -74,13 +74,7 @@
       - fzf
       - zoxide
       - imagemagick
-      state: present
-      update_cache: yes
 
-  - name: Install Flatpak package
-    flatpak:
-      name: de.haeckerfelix.Fragments
-      remote: flathub
       state: present
 
   - name: Download Ghostty .deb package
@@ -104,23 +98,7 @@
   - name: Configure Flameshot
     command: flameshot config -f "%T_ %e-%m-%Y"
 
-  - name: Add user to libvirt and libvirt-qemu groups
-    user:
-      name: "{{ ansible_user }}"
-      group: "{{ item }}"
-      append: yes
-    with_items:
-    - libvirt
-    - libvirt-qemu
-
   - name: Configure editor alternative (set editor to vim or another preferred editor)
     command: update-alternatives --set editor /usr/bin/nvim
-
-  - name: Install gnome-shell extensions (Optional)
-    apt:
-      name:
-      - gnome-shell-extension-weather
-      - gnome-shell-extension-gsconnect-browsers
-      state: present
 
 ### https://www.chezmoi.io/
