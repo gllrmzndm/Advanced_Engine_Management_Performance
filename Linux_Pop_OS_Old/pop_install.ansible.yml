@@ -68,6 +68,7 @@
       - fzf
       - zoxide
       - imagemagick
+      - fonts-powerline
 
       state: present
 
@@ -94,6 +95,7 @@
 
   - name: Configure editor alternative (set editor to vim or another preferred editor)
     command: update-alternatives --set editor /usr/bin/nvim
-
+    
+### dconf write /org/gnome/desktop/interface/enable-animations false
 ### https://www.chezmoi.io/
 ## Oh my bash https://github.com/ohmybash/oh-my-bash
